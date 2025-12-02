@@ -1,8 +1,4 @@
-use std::{
-    fs::File,
-    io::{self, BufRead},
-    path::Path,
-};
+use utils::read_lines;
 
 fn main() {
     let mut arrow = 50;
@@ -56,12 +52,4 @@ fn advance(start: i32, code: &str) -> (i32, i32) {
     println!("");
 
     (modulo, zero_crosses)
-}
-
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where
-    P: AsRef<Path>,
-{
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
 }
