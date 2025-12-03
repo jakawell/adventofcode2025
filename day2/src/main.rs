@@ -54,7 +54,6 @@ pub fn check_id_pattern(id: &str) -> bool {
     // if there are less than n bytes, we're done and there is no repeating pattern
     let bytes = id.as_bytes();
     let mut pattern = &bytes[0..1];
-    let mut processed_bytes = &bytes[0..1];
     let mut remaining_bytes = &bytes[1..];
     let mut index = 1;
     loop {
@@ -65,14 +64,13 @@ pub fn check_id_pattern(id: &str) -> bool {
             // if the next bytes DO NOT match the pattern, we update the pattern to be all the processed bytes so far plus this new one
             if to_check != pattern {
                 index += 1;
-                processed_bytes = &bytes[0..index];
+                let processed_bytes = &bytes[0..index];
                 remaining_bytes = &bytes[index..];
                 pattern = processed_bytes;
             }
             // if the next bytes DO match the pattern, we move those bytes to the processed list and advance past them
             else {
                 index += pattern_length;
-                processed_bytes = &bytes[0..index];
                 remaining_bytes = &bytes[index..];
             }
         }
